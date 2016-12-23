@@ -8,8 +8,9 @@
   },
   "keywords": [],
   "author": "Justin Schroeder <jschroeder@getwrecked.com> (http://getwrecked.com)",
-  "license": "PRIVATE",
+  "license": "UNLISCENCED",
   "dependencies": {
     "express": "^4.14.0"
-  }
+  },
+  "private": true
 }
