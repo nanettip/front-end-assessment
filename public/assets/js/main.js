@@ -1,4 +1,6 @@
 var ulContainer = document.getElementById("list");
+var selectContainer = document.getElementById("selector");
+
 var ajaxRequest = new XMLHttpRequest();
 ajaxRequest.open('GET', 'http://localhost:8080/data');
 ajaxRequest.onload = function() {
@@ -27,11 +29,12 @@ ajaxRequest.onload = function() {
     function renderHTML(data) {
         data.forEach(function(e) {
             if ((e.number % 2) == 1) {
-                ulContainer.innerHTML += '<li class="' + e.number.toString() +'" style="background-color:#A6ACAF"> ' + e.toString() + '</li>';
+                ulContainer.innerHTML += '<li class="' + e.number.toString() + '" style="background-color:#A6ACAF"> ' + e.toString() + '</li>';
             }
             else {
-                ulContainer.innerHTML += '<li class="' + e.number.toString() +'"> ' + e.toString() + '</li>';
+                ulContainer.innerHTML += '<li class="' + e.number.toString() + '"> ' + e.toString() + '</li>';
             }
+            selectContainer.innerHTML += '<option value="' + e.number.toString() + '"> ' + e.toString() + '</option>';
         });
     }
     var ajaxData = JSON.parse(ajaxRequest.responseText);
@@ -53,3 +56,19 @@ ajaxRequest.onload = function() {
 
 };
 ajaxRequest.send();
+
+selectContainer.addEventListener("change", function() {
+    var listItems = document.getElementsByTagName('li');
+    var target = document.getElementsByClassName(selectContainer.value)[0];
+
+    for(var i = 0; i < listItems.length; i++) {
+        listItems[i].style.color = '#000';
+    }
+    target.style.color = '#ff0000';
+});
+
+ulContainer.addEventListener("click", function(e) {
+    if (e.target.tagName == 'LI') {
+        alert(e.target.textContent + ' was clicked!');
+    }
+});
