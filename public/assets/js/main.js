@@ -1,9 +1,8 @@
-var ulContainer = document.getElementById("list");
-var selectContainer = document.getElementById("selector");
-
 var ajaxRequest = new XMLHttpRequest();
 ajaxRequest.open('GET', 'http://localhost:8080/data');
 ajaxRequest.onload = function() {
+    var ulContainer = document.getElementById("list");
+    var selectContainer = document.getElementById("selector");
     function dataObject(number) {
         this.number = number;
         this.toString = function() {
@@ -53,22 +52,20 @@ ajaxRequest.onload = function() {
     });
     
     renderHTML(objectArray);
+    selectContainer.addEventListener("change", function() {
+        var listItems = document.getElementsByTagName('li');
+        var target = document.getElementsByClassName(selectContainer.value)[0];
 
+        for(var i = 0; i < listItems.length; i++) {
+            listItems[i].style.color = '#000';
+        }
+        target.style.color = '#ff0000';
+    });
+
+    ulContainer.addEventListener("click", function(e) {
+        if (e.target.tagName == 'LI') {
+            alert(e.target.textContent + ' was clicked!');
+        }
+    });
 };
 ajaxRequest.send();
-
-selectContainer.addEventListener("change", function() {
-    var listItems = document.getElementsByTagName('li');
-    var target = document.getElementsByClassName(selectContainer.value)[0];
-
-    for(var i = 0; i < listItems.length; i++) {
-        listItems[i].style.color = '#000';
-    }
-    target.style.color = '#ff0000';
-});
-
-ulContainer.addEventListener("click", function(e) {
-    if (e.target.tagName == 'LI') {
-        alert(e.target.textContent + ' was clicked!');
-    }
-});
